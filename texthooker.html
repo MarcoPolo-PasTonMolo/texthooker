@@ -317,7 +317,7 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
 
             // Add to local storage
             if(mutation.source !== 'localStorage' && selection.value === 'text') {
-              const curDate = getCurDate();
+              const curDate = formatDate();
 
               updateLocalStorage('text', pr => ({
                 text: [ ...pr.text, ptag.textContent ],
@@ -356,7 +356,7 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
           }
 
           let lineLen = line.length
-          updateCounter(lineLen, 1, mutation.date || getCurDate());
+          updateCounter(lineLen, 1, mutation.date || formatDate());
         }
       })
     }
@@ -550,11 +550,11 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
       displayCounter();
     }
 
-    function getCurDate() {
+    function formatDate(date = new Date()) {
       // 4 hour offset
       const offset = 4 * 3600 * 1000;
-      const now = new Date(new Date() - offset);
-      return `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+      date = new Date(date - offset);
+      return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     }
 
     function undoDeletion() {
@@ -601,6 +601,20 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
     if(!localStorage.getItem('text')) {
       updateLocalStorage('text', _ => ({ text: [], dates: [] }));
     }
+
+    // Backwards compatibility
+    updateLocalStorage('text', pr => {
+      if(pr?.constructor === Array) {
+        const yesterday = new Date(new Date() - 24 * 3600 * 1000);
+
+        return {
+          text: pr,
+          dates: pr.length > 0 ? [ { date: formatDate(yesterday), index: 0 } ] : []
+        }
+      }
+
+      return pr;
+    })
 
     if(!localStorage.getItem('history')) {
       localStorage.setItem('history', '[]');
