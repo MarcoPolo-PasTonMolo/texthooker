@@ -223,6 +223,7 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
     //The text inserter/scroller and the counter begin here.
 
     //These are needed later.
+    const CHARS_TO_IGNORE = "「」『』[]()〈〉≪≫。、.,'：！?！？…――─ｰ～→♪" + '"' + "　" + "  "
     let lines = { total: 0 }
     let chars = { total: 0 }
     let history = [];
@@ -349,10 +350,9 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
           //Update the counter.
           line = text
 
-          toRemove = "「」『』[]()〈〉≪≫。、.,'：！?！？…――─ｰ～→♪" + '"' + "　" + "  "
           line = line.replace(/(\r\n|\n|\r)/gm, "").split(' ').join('');
-          for (var i = 0; i < toRemove.length; i++) {
-            line = line.split(toRemove[i]).join('')
+          for (var i = 0; i < CHARS_TO_IGNORE.length; i++) {
+            line = line.split(CHARS_TO_IGNORE[i]).join('')
           }
 
           let lineLen = line.length
@@ -375,10 +375,9 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
       //Get the length of the line being removed.
       let line = xdiv.parentNode.getElementsByTagName('span')[0].textContent
 
-      toRemove = "「」『』[]()〈〉≪≫。、.,'：！?！？…――ｰ～→♪" + '"' + "　" + "  "
       let filteredLine = line.replace(/(\r\n|\n|\r)/gm, "").split(' ').join('');
-      for (var i = 0; i < toRemove.length; i++) {
-        filteredLine = filteredLine.split(toRemove[i]).join('')
+      for (var i = 0; i < CHARS_TO_IGNORE.length; i++) {
+        filteredLine = filteredLine.split(CHARS_TO_IGNORE[i]).join('')
       }
 
       let lineLen = filteredLine.length
