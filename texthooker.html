@@ -520,9 +520,17 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
 
       document.getElementById('counter').textContent = charsdisp + ' / ' + linesdisp
 
+      const formattedDatetoLocaleString = (date) => {
+        return new Date(date.split('/').reverse()).toLocaleDateString();
+      }
+
       detailedCounter.innerHTML = Object.keys(chars)
         .filter(a => a !== 'total' && chars[a] !== 0)
-        .map(key => `<div><span>${key}: </span> ${chars[key].toLocaleString()} / ${lines[key].toLocaleString()}</div>`)
+        .map(key => `<div>
+          <span>
+            ${formattedDatetoLocaleString(key)}: 
+          </span> ${chars[key].toLocaleString()} / ${lines[key].toLocaleString()}
+        </div>`)
         .join('');
     }
 
