@@ -644,12 +644,16 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
     })
 
     selection.addEventListener('change', e => {
-      const isFromChars = JSON.parse(localStorage.getItem('chars')).lines.total > 0;
+      // If changed from chars to something else and data has been lost
+      const isFromChars =
+        JSON.parse(localStorage.getItem('chars')).lines.total >
+        document.querySelectorAll('.line_box').length;
+      const question = "This action will reset your stats and clear the page. Are you sure you want to procceed?";
 
       switch(selection.value) {
         case 'nothing':
           if(isFromChars) {
-            const answer = confirm("This action will reset your stats and clear the page. Are you sure you want to procceed?");
+            const answer = confirm(question);
 
             if(answer) {
               clearEverything();
@@ -677,7 +681,7 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
           break;
         case 'text':
           if(isFromChars) {
-            const answer = confirm("This action will reset your stats and clear the page. Are you sure you want to procceed?");
+            const answer = confirm(question);
 
             if(answer) {
               clearEverything();
