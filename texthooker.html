@@ -336,7 +336,7 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
                 text: [ ...pr.text, ptag.textContent ],
                 dates: (pr.dates[pr.dates.length - 1]?.date === curDate) ?
                   pr.dates :
-                  [ ...pr.dates, { date: curDate, index: pr.text.length } ]
+                  [ ...pr.dates, { date: curDate, index: [...pr.text].length } ]
               }));
             }
 
@@ -367,7 +367,7 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
             line = line.split(CHARS_TO_IGNORE[i]).join('')
           }
 
-          let lineLen = line.length
+          let lineLen = [...line].length
           updateCounter(lineLen, 1, mutation.date || formatDate());
         }
       })
@@ -392,7 +392,7 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
         filteredLine = filteredLine.split(CHARS_TO_IGNORE[i]).join('')
       }
 
-      let lineLen = filteredLine.length
+      let lineLen = [...filteredLine].length
 
       // Remove line from localStorage
       const lines = Array.from(document.querySelectorAll('.remove_button'));
@@ -519,7 +519,7 @@ For more font attribute information visit http://www.w3schools.com/css/css_font.
               a = a.split(CHARS_TO_IGNORE[j]).join('')
             }
 
-            let lineLen = a.length
+            let lineLen = [...a].length
             updateCounter(
               lineLen,
               1,
